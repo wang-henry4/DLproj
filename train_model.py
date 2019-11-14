@@ -7,7 +7,7 @@ import pickle
 
 root_path = "/Users/whenry/stuff/DPproject/"
 train_csv_path = root_path + "data/train.csv"
-img_path = root_path + "train/"
+img_path = root_path + "data/train/"
 classes = 28
 
 def get_label(line):
@@ -58,16 +58,19 @@ def get_model(transfer_layer):
     new_model = tf.keras.Model(inputs=Input_Layer, outputs=out)
     return new_model
 
-data = tf.data.TextLineDataset(train_csv_path)
-data = data.map(process_line)
-data = data.repeat(10).shuffle(128).batch(32)
+def get_data(epochs = 10, batch=32):
+    data = tf.data.TextLineDataset(train_csv_path)
+    data = data.map(process_line)
+    data = data.repeat(epochs).shuffle(128).batch(batch)
+    return data
 
 for t_layer in ["conv2_block3_out", "conv3_block3_out", "conv4_block3_out", "conv5_block3_out"]:
     model = get_model(t_layer)
+    print(model.summary())
     model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss='binary_crossentropy',
               metrics=['accuracy'])
-    history = model.fit(data, epochs=20, steps_per_epoch=826)
+    history = model.fit(get_data(), epochs=10, steps_per_epoch=826)
     model.save(root_path+f"models/{t_layer}.h5")
     with open(root_path+f"{t_layer}_history", 'wb') as file_pi:
         pickle.dump(history.history, file_pi)
