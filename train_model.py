@@ -5,7 +5,7 @@ from tensorflow.keras.applications.resnet50 import preprocess_input, decode_pred
 import numpy as np
 import pickle
 
-root_path = "/Users/whenry/stuff/DPproject/"
+root_path = "/Users/whenry/stuff/DLproject/"
 train_csv_path = root_path + "data/train.csv"
 img_path = root_path + "data/train/"
 classes = 28
