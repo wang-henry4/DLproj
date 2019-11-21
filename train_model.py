@@ -4,6 +4,8 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 import numpy as np
 import pickle
+import tensorflow.keras.backend as K
+
 
 root_path = "/Users/whenry/stuff/DLproject/"
 train_csv_path = root_path + "data/train.csv"
@@ -44,11 +46,10 @@ def get_model(transfer_layer):
         layer.trainable = False
         
     X = model.get_layer(transfer_layer).output
-    X = tf.keras.layers.Conv2D(64, 1)(X)
+    X = tf.keras.layers.Conv2D(32, 1)(X)
     x = tf.keras.layers.BatchNormalization()(X)
     X = tf.keras.layers.Activation("relu")(X)
     X = tf.keras.layers.GlobalAveragePooling2D()(X)
-    X = tf.keras.layers.Dense(32, activation='relu')(X)
     X = tf.keras.layers.Dense(classes, activation='sigmoid')(X)
     new_model = tf.keras.Model(inputs=model.input, outputs=X)
     
@@ -57,6 +58,18 @@ def get_model(transfer_layer):
     out = new_model(In)
     new_model = tf.keras.Model(inputs=Input_Layer, outputs=out)
     return new_model
+
+def f1(y_true, y_pred):
+    tp = K.sum(K.cast(y_true*y_pred, 'float'), axis=0)
+    fp = K.sum(K.cast((1-y_true)*y_pred, 'float'), axis=0)
+    fn = K.sum(K.cast(y_true*(1-y_pred), 'float'), axis=0)
+
+    p = tp / (tp + fp + K.epsilon())
+    r = tp / (tp + fn + K.epsilon())
+
+    f1 = 2*p*r / (p+r+K.epsilon())
+    f1 = tf.where(tf.math.is_nan(f1), tf.zeros_like(f1), f1)
+    return K.mean(f1)
 
 def get_data(epochs = 10, batch=32):
     data = tf.data.TextLineDataset(train_csv_path)
@@ -69,7 +82,7 @@ for t_layer in ["conv2_block3_out", "conv3_block3_out", "conv4_block3_out", "con
     print(model.summary())
     model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss='binary_crossentropy',
-              metrics=['accuracy'])
+              metrics=['accuracy', f1])
     history = model.fit(get_data(), epochs=10, steps_per_epoch=826)
     model.save(root_path+f"models/{t_layer}.h5")
     with open(root_path+f"{t_layer}_history", 'wb') as file_pi:
