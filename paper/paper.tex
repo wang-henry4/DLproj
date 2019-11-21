@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{subcaption}
-\graphicspath{ {/Users/whenry/stuff/DLproject/paper/figures/} }
+\graphicspath{ {figures/} }
 \begin{document}
  
 \section{Introduction}
@@ -15,7 +15,6 @@ pretrained model and then train a linear classifier using the extracted features
 \begin{figure}[h!]
     \includegraphics[scale=0.43]{Examples-in-the-ImageNet-dataset.png}
     \caption{Example images in the ImageNet dataset}
-    \label{fig:boat1}
 \end{figure}
 
 However, these pretrained models are usually trained on the ImageNet dataset. This dataset is a large
@@ -54,7 +53,6 @@ not be able to extract very good features.
           \includegraphics[width=\linewidth]{../../data/train/fcb70c22-bbc2-11e8-b2bc-ac1f6b6435d0.png}
       \end{subfigure}
     \caption{Example images from the Human Protein dataset}
-    \label{fig:coffee}
   \end{figure}
 \subsection{Extracting Features}
 It has been shown that in a deep convolutional neural network trained for image classification, the
