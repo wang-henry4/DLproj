@@ -54,6 +54,14 @@ not be able to extract very good features.
       \end{subfigure}
     \caption{Example images from the Human Protein dataset}
   \end{figure}
+  
+  Researches in biology field has been made a lot easier by data analyst nowadays. Training machines for tedious work is saving experts a lot time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong. 
+
+Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address this problem, people have tried k-NN classifiers, support vector machines, artificial neural networks and decision trees. A study conducted by the HPA Cell Atlas team, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with F1 score equal to 0.72, but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplement.
+
+Though the HPA Cell Atlas team used transfer-learning approach as well, their input involved the results of training 60,000 players and millions of images which is time consuming and not applicable for small intuitions. So we proposed a project to classify proteins with pretrained models.
+
+  
 \subsection{Extracting Features}
 It has been shown that in a deep convolutional neural network trained for image classification, the
 feature maps of the network start very simple, looking for edges and corners, and become increasingly
@@ -113,5 +121,33 @@ To train the each model we used the ADAM optimization algorithm with minibatches
 The parameters we used for ADAM were: $\eta = 10^{-3}$, $\beta_1 = 0.9$, $beta_2=0.999$, these
 are the default values in Keras' implementation of ADAM.
 We were able to run 10 epochs of training on each model given our computing resources. 
+\section{Results}
+Comparing the results of the models, we found the pretrained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on basic features of images, such as lines and shape. Since the images of protein are composed of similar shapes and simple color, the earlier layer could capture the variance better. 
+
+Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
+
+
+\begin{table}[h!]
+\centering
+
+\begin{tabular}{|c|c|c|c|c|}
+    \hline\\
+     &Model1 & Model2&Model3&Model4 \\
+     \hline\\
+     Error&0.229&0.565&0.314&0.236\\
+     \hline\\
+     Accuracy&0.946&0.932&0.927&0.936\\
+     \hline
+\end{tabular}
+
+{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pretrained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
+
+\label{table:1}
+\end{table}
+
+
+The F1 score of our best model is 0.07, which is much lower than that of HPA Cell Atlas team's study. The reason that we are getting this low F1 score is because of the unbalance in data and limited trained epochs.
 \end{document}
+
+
 
