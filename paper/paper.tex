@@ -124,9 +124,6 @@ We were able to run 10 epochs of training on each model given our computing reso
 \section{Results}
 Comparing the results of the models, we found the pretrained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on basic features of images, such as lines and shape. Since the images of protein are composed of similar shapes and simple color, the earlier layer could capture the variance better. 
 
-Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
-
-
 \begin{table}[h!]
 \centering
 
@@ -137,6 +134,8 @@ Considering we are able to finish training this model on 26455 images in 4 hours
      Error&0.229&0.565&0.314&0.236\\
      \hline\\
      Accuracy&0.946&0.932&0.927&0.936\\
+      \hline
+     F1 Score&0.321&0.169&0.312&0.267\\
      \hline
 \end{tabular}
 
@@ -145,8 +144,9 @@ Considering we are able to finish training this model on 26455 images in 4 hours
 \label{table:1}
 \end{table}
 
+What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice of the probabilities of unchosen classes and the F1 score of the best model is 0.32. The data is very unbalanced, with the largest class counting for 42\% of the data and getting a F1 score of 0.680. So we choose the weighted F1 score. We noticed that our model performance is not good compared to that of HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and limited number of trained epochs.
 
-The F1 score of our best model is 0.07, which is much lower than that of HPA Cell Atlas team's study. The reason that we are getting this low F1 score is because of the unbalance in data and limited trained epochs.
+Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
 \end{document}
 
 
