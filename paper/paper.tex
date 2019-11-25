@@ -144,7 +144,7 @@ Comparing the results of the models, we found the pre-trained model with the ear
 \label{table:1}
 \end{table}
 
-What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and the F1 score of the best model is 0.32. The data is very unbalanced, with the largest class counting for 42\% of the data and getting an F1 score of 0.680. So we choose the weighted F1 score. We noticed that our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
+What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and calculated the F1 score on the test data. The data is very unbalanced, with the largest class counting for 42\% of the training data and getting an F1 score of 0.680 on the test data. So we choose the weighted F1 score and that of the best model is 0.32. We noticed that judging on F1 score, our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
 
 Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
 \end{document}
