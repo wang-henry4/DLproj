@@ -55,11 +55,11 @@ not be able to extract very good features.
     \caption{Example images from the Human Protein dataset}
   \end{figure}
   
- Researches in biology field has been made a lot easier by data analyst nowadays. Training machines for tedious work is saving experts a lot time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong. 
+Researches in the biology field have been made a lot easier by data analysis nowadays. Training machines for tedious work is saving experts a lot of time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong. 
 
-Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address this problem, people have tried k-NN classifiers, support vector machines, artificial neural networks and decision trees. A study conducted by the HPA Cell Atlas team, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with F1 score equal to 0.72, but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplement.
+Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address this problem, people have tried k-NN classifiers, support vector machines, artificial neural networks, and decision trees. A study conducted by the HPA Cell Atlas team, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with the F1 score equal to 0.72 but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplements.
 
-Though the HPA Cell Atlas team used transfer-learning approach as well, their input involved the results of training 60,000 players and millions of images which is time consuming and not applicable for small intuitions. So we proposed a project to classify proteins with pretrained models.
+Though the HPA Cell Atlas team used the transfer-learning approach as well, their input involved the results of training 60,000 players and millions of images which is time-consuming and not applicable for small intuitions. So we proposed a project to classify proteins with pre-trained models.
 
   
 \subsection{Extracting Features}
@@ -122,7 +122,7 @@ The parameters we used for ADAM were: $\eta = 10^{-3}$, $\beta_1 = 0.9$, $beta_2
 are the default values in Keras' implementation of ADAM.
 We were able to run 10 epochs of training on each model given our computing resources. 
 \section{Results}
-Comparing the results of the models, we found the pretrained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on basic features of images, such as lines and shape. Since the images of protein are composed of similar shapes and simple color, the earlier layer could capture the variance better. 
+Comparing the results of the models, we found the pre-trained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on the basic features of images, such as lines and shapes. Since the images of protein are composed of similar shapes and simple colors, the earlier layer could capture the variance better. 
 
 \begin{table}[h!]
 \centering
@@ -144,7 +144,7 @@ Comparing the results of the models, we found the pretrained model with the earl
 \label{table:1}
 \end{table}
 
-What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice of the probabilities of unchosen classes and the F1 score of the best model is 0.32. The data is very unbalanced, with the largest class counting for 42\% of the data and getting a F1 score of 0.680. So we choose the weighted F1 score. We noticed that our model performance is not good compared to that of HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and limited number of trained epochs.
+What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and the F1 score of the best model is 0.32. The data is very unbalanced, with the largest class counting for 42\% of the data and getting an F1 score of 0.680. So we choose the weighted F1 score. We noticed that our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
 
 Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
 \end{document}
