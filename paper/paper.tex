@@ -12,12 +12,8 @@ an individual or group needs a model for an image classification task, these pre
 models do cannot be applied directly. In this case, the usual solution is to use transfer learning.
 Using the pretrained model as a feature extractor, we pass our task specific data into a 
 pretrained model and then train a linear classifier using the extracted features of our images.
-\begin{figure}[h!]
-    \includegraphics[scale=0.43]{Examples-in-the-ImageNet-dataset.png}
-    \caption{Example images in the ImageNet dataset}
-\end{figure}
 
-However, these pretrained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
+These pretrained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
 collection of images of real world objects such as animals, like dogs and cats, and other objects like cars.
 Thus we would expect these models to be good at extracting features from images that are similar to ImageNet,
 aka realworld, everyday objects. If we want to apply these models to images that are very different from 
@@ -63,13 +59,19 @@ Though the HPA Cell Atlas team used the transfer-learning approach as well, thei
 
   
 \subsection{Transfer Learning}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.40]{Examples-in-the-ImageNet-dataset.png}
+  \caption{Example images in the ImageNet dataset}
+\end{figure}
+
 It has been shown that in a deep convolutional neural network trained for image classification, the models
 can be used on other image datasets to extract useful feature maps for machine learning purposes. The learned 
 feature maps of the pretrained network start very simple, looking for edges and corners, and become increasingly
 complex as the layers get deeper.\cite{10.1007/978-3-319-10590-1_53} These learned feature maps are general enough to be applied to unseen data from 
-from other image datasets.\cite{NIPS2014_5347}
+from other image datasets\cite{NIPS2014_5347}.
 
-The most common and powerful pretrained models used for images are all trained on the ImageNet dataset. This dataset
+The most common and powerful pretrained models used for images are all trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset
 is an incredibly diverse set of images containing a thousand different classes of everyday objects. For most machine learning
 applications relating to image processing, this dataset works very well as a base dataset for pretrained networks as it can 
 be interpreted as a superset of the images that an application would see in the real world. However, this is not true for all
@@ -104,7 +106,7 @@ The input of our model consists of 224x224x3 sized arrays, they first go through
 us normalize the input to the pretrained model on our specific dataset, allowing us 
 to feed the raw data in without much preprocessing.
 
-The ResNet50V2 model is conviniently structured into distinct residual blocks.
+The ResNet50V2 model is conveniently structured as distinct residual blocks.
 For our experiments we picked the outputs of 4 different residual blocks, evenly spaced between each other, in the model
 as our final feature map. The output of the chosen hidden layers is a large amount of 
 feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
