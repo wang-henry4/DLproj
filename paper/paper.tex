@@ -17,7 +17,7 @@ pretrained model and then train a linear classifier using the extracted features
     \caption{Example images in the ImageNet dataset}
 \end{figure}
 
-However, these pretrained models are usually trained on the ImageNet dataset. This dataset is a large
+However, these pretrained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
 collection of images of real world objects such as animals, like dogs and cats, and other objects like cars.
 Thus we would expect these models to be good at extracting features from images that are similar to ImageNet,
 aka realworld, everyday objects. If we want to apply these models to images that are very different from 
@@ -62,13 +62,21 @@ Historical efforts have been limited to single patterns in one or a few cell typ
 Though the HPA Cell Atlas team used the transfer-learning approach as well, their input involved the results of training 60,000 players and millions of images which is time-consuming and not applicable for small intuitions. So we proposed a project to classify proteins with pre-trained models.
 
   
-\subsection{Extracting Features}
-It has been shown that in a deep convolutional neural network trained for image classification, the
-feature maps of the network start very simple, looking for edges and corners, and become increasingly
-complex as the layers get deeper. 
+\subsection{Transfer Learning}
+It has been shown that in a deep convolutional neural network trained for image classification, the models
+can be used on other image datasets to extract useful feature maps for machine learning purposes. The learned 
+feature maps of the pretrained network start very simple, looking for edges and corners, and become increasingly
+complex as the layers get deeper.\cite{10.1007/978-3-319-10590-1_53} These learned feature maps are general enough to be applied to unseen data from 
+from other image datasets.\cite{NIPS2014_5347}
 
-Examining some samples of the Human Protein dataset reveals them to be very different from ImageNet. They 
-do not have much of the complex features that any real world image would have, and are mostly made up of 
+The most common and powerful pretrained models used for images are all trained on the ImageNet dataset. This dataset
+is an incredibly diverse set of images containing a thousand different classes of everyday objects. For most machine learning
+applications relating to image processing, this dataset works very well as a base dataset for pretrained networks as it can 
+be interpreted as a superset of the images that an application would see in the real world. However, this is not true for all
+applications, specifically those which deal with images that are very different from what we see in our everyday lives, for Example
+images of microscopic objects.
+
+The Human Protein Dataset is an example of such a dataset. They do not have much of the complex features that any real world image would have, and are mostly made up of 
 lines, and circles and corners. Therefore we predict that early layers from a pretrained model will
 provide good features for classification for this dataset, while later layers will perform comparatively worse, 
 due to the fact that the more complex patterns that the later layers are looking for do not exist in this 
@@ -80,7 +88,7 @@ for the Human Protein dataset is the one with the earliest layer hidden layer as
 \section{Method}
 We are seaking to test the feature extraction power of pretrained networks on 
 a dataset that is very different from the one which it is trained on. We take 
-a pretrained, state-of-the-art image classification model, ResNet50V2, and take
+a pretrained, state-of-the-art image classification model, ResNet50V2 \cite{DBLP:journals/corr/HeZR016}, and take
 the feature maps of the model at different levels to use as the features for 
 a linear classifier, which we train on our human protein data. We freeze the weights
 of the pretrained model and train only the added layers at the end.
@@ -92,18 +100,18 @@ a vector of length $n$ where $n$ is the number of classes, where it is a 1 at po
 it belongs to the $i^{th}$ class and 0 otherwise.
 \subsection{Model}
 
-The input of our model first goes through a batch normalization layer. This helps
+The input of our model consists of 224x224x3 sized arrays, they first go through a batch normalization layer\cite{ioffe2015batch}. This helps
 us normalize the input to the pretrained model on our specific dataset, allowing us 
-to feed the raw data in.
+to feed the raw data in without much preprocessing.
 
 The ResNet50V2 model is conviniently structured into distinct residual blocks.
-For our experiments we picked the outputs of 4 different residual blocks in the model
+For our experiments we picked the outputs of 4 different residual blocks, evenly spaced between each other, in the model
 as our final feature map. The output of the chosen hidden layers is a large amount of 
-feature maps, we chose not to directly flatten and connect it to a dense prediction
-layer due to the amount of parameters that would need. We chose to reduce the number of 
-feature maps from the output by first passing it through a 1x1 convolution layer with 
-relu activation. This allows us to significantly reduce the number of feature maps and makes training faster. 
-We then flatten the feature maps using global average pooling, and then connect to a 
+feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
+layer due to the amount of feature maps ResNet50V2 outputs and thus the amount of parameters that would need. We chose to reduce the number of 
+feature maps from the output by first passing it through a 1x1 convolution layer\cite{szegedy2014going} with 
+relu activation. This allows us to reduce the number of final feature maps in a efficient way, significantly reducing the number of parameters and training time. 
+We then flatten the feature maps using global average pooling\cite{Lin2013NetworkIN}, and then connect to a 
 fully connected dense layer for prediction. 
 
 The dataset we are tackling is a multi label classification problem, therefore use sigmoid activation
@@ -117,7 +125,7 @@ that an image is in class $i$, where each $\hat{y}_i$ is indenpendent of other c
 each $x$ can belong to multiple classes at the same time. 
 
 \subsection{Training}
-To train the each model we used the ADAM optimization algorithm with minibatches of size 32.
+To train the each model we used the ADAM optimization algorithm\cite{kingma2014adam} with minibatches of size 32.
 The parameters we used for ADAM were: $\eta = 10^{-3}$, $\beta_1 = 0.9$, $beta_2=0.999$, these
 are the default values in Keras' implementation of ADAM.
 We were able to run 10 epochs of training on each model given our computing resources. 
@@ -147,6 +155,10 @@ Comparing the results of the models, we found the pre-trained model with the ear
 What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and calculated the F1 score on the test data. The data is very unbalanced, with the largest class counting for 42\% of the training data and getting an F1 score of 0.680 on the test data. So we choose the weighted F1 score and that of the best model is 0.32. We noticed that judging on F1 score, our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
 
 Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
+
+\newpage
+\bibliography{paper}
+\bibliographystyle{ieeetr}
 \end{document}
 
 
