@@ -110,7 +110,8 @@ a vector of length $n$ where $n$ is the number of classes, where it is a 1 at po
 The input of our model consists of 224x224x3 sized arrays, they first go through a batch normalization layer\cite{ioffe2015batch}. This helps
 us normalize the input to the pre-trained model on our specific dataset, allowing us 
 to feed the raw data in without much pre-processing.
-
+\\
+\\
 The ResNet50V2 model is conveniently structured as distinct residual blocks.
 For our experiments, we picked the outputs of 4 different residual blocks, evenly spaced between each other, in the model
 as our final feature map. The output of the chosen hidden layers is a large number of feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
@@ -118,7 +119,8 @@ layer due to the number of feature maps ResNet50V2 outputs and thus the number o
 relu activation. This allows us to reduce the number of final feature maps in an efficient way, significantly reducing the number of parameters and training time. 
 We then flatten the feature maps using global average pooling\cite{Lin2013NetworkIN}, and then connect to a 
 fully connected dense layer for prediction. 
-
+\\
+\\
 The dataset we are tackling is a multi-label classification problem, therefore use sigmoid activation
 in the prediction layer as each image can belong in multiple classes. We use binary cross-entropy as the loss function. 
 \begin{equation}
@@ -141,13 +143,13 @@ Comparing the results of the models, we found the pre-trained model with the ear
 \begin{figure}[ht]
     \centering
     \begin{subfigure}[b]{0.8\linewidth}
-      \includegraphics[width=\linewidth]{paper/figures/accuray.png}
+      \includegraphics[width=\linewidth]{accuray.png}
     \end{subfigure}
     
     \begin{subfigure}[b]{0.8\linewidth}
-      \includegraphics[width=\linewidth]{paper/figures/loss.png}
+      \includegraphics[width=\linewidth]{loss.png}
     \end{subfigure}
-    \caption{Example images from the Human Protein dataset}
+    \caption{Training loss and accuracy of each model}
   \end{figure}
 
 \begin{table}[ht]
