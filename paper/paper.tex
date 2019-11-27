@@ -6,25 +6,25 @@
 
 \section*{Abstract}
 Transfer learning is a popular method for tackling machine learning problems with image classification, 
-pretrained models alows people to leverage it's generalization capabilities without needing large compute 
+pre-trained models allows people to leverage it's generalization capabilities without needing large compute 
 resources. In this project, we focused on models to classify images of mixed patterns of proteins,
 taken with a microscope. To achieve this goal, we utilized transfer learning 
 and demonstrated the hypothesis that earlier layers in a convolutional network captures simple features,
 while later layers captures more complex features. Due to the differences between the training set
-of the pretrained model and our dataset, we show that ealier layers in a pretrained convolutional network
+of the pre-trained model and our dataset, we show that earlier layers in a pre-trained convolutional network
 gives better results in our classification task. Our best model realized a 94\% accuracy on 
 the test dataset with limited computational sources, thus provided a feasible way for people with 
 no powerful machines.
 \section{Introduction}
 There are now many neural network methods and architectures designed for 
-image classification that perform exceptionaly well. These models were trained
+image classification that perform exceptionally well. These models were trained
 on millions of images, with powerful GPU acceleration. However in many cases where
-an individual or group needs a model for an image classification task, these pretrained
+an individual or group needs a model for an image classification task, these pre-trained
 models do cannot be applied directly. In this case, the usual solution is to use transfer learning.
-Using the pretrained model as a feature extractor, we pass our task specific data into a 
-pretrained model and then train a linear classifier using the extracted features of our images.
+Using the pre-trained model as a feature extractor, we pass our task specific data into a 
+pre-trained model and then train a linear classifier using the extracted features of our images.
 
-These pretrained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
+These pre-trained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
 collection of images of real world objects such as animals, like dogs and cats, and other objects like cars.
 Thus we would expect these models to be good at extracting features from images that are similar to ImageNet,
 aka realworld, everyday objects. If we want to apply these models to images that are very different from 
@@ -78,35 +78,35 @@ Though the HPA Cell Atlas team used the transfer-learning approach as well, thei
 
 It has been shown that in a deep convolutional neural network trained for image classification, the models
 can be used on other image datasets to extract useful feature maps for machine learning purposes. The learned 
-feature maps of the pretrained network start very simple, looking for edges and corners, and become increasingly
+feature maps of the pre-trained network start very simple, looking for edges and corners, and become increasingly
 complex as the layers get deeper.\cite{10.1007/978-3-319-10590-1_53} These learned feature maps are general enough to be applied to unseen data from 
 from other image datasets\cite{NIPS2014_5347}.
 
-The most common and powerful pretrained models used for images are all trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset
+The most common and powerful pre-trained models used for images are all trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset
 is an incredibly diverse set of images containing a thousand different classes of everyday objects. For most machine learning
-applications relating to image processing, this dataset works very well as a base dataset for pretrained networks as it can 
+applications relating to image processing, this dataset works very well as a base dataset for pre-trained networks as it can 
 be interpreted as a superset of the images that an application would see in the real world. However, this is not true for all
 applications, specifically those which deal with images that are very different from what we see in our everyday lives, for Example
 images of microscopic objects.
 
 The Human Protein Dataset is an example of such a dataset. They do not have much of the complex features that any real world image would have, and are mostly made up of 
-lines, and circles and corners. Therefore we predict that early layers from a pretrained model will
+lines, and circles and corners. Therefore we predict that early layers from a pre-trained model will
 provide good features for classification for this dataset, while later layers will perform comparatively worse, 
 due to the fact that the more complex patterns that the later layers are looking for do not exist in this 
 dataset. 
 
-In this paper we test this hypothesis by using a pretrained model as a feature extractor, we choose multiple different
-hidden layers to from this model, and train a classifier on each different layer. We find that the best performing classifier
+In this paper we test this hypothesis by using a pre-trained model as a feature extractor, we choose multiple different
+hidden layers from this model, and train a classifier on each different layer. We find that the best performing classifier
 for the Human Protein dataset is the one with the earliest layer hidden layer as its feature extractor.
 \section{Method}
-We are seaking to test the feature extraction power of pretrained networks on 
+We are seeking to test the feature extraction power of pre-trained networks on 
 a dataset that is very different from the one which it is trained on. We take 
-a pretrained, state-of-the-art image classification model, ResNet50V2 \cite{DBLP:journals/corr/HeZR016}, and take
+a pre-trained, state-of-the-art image classification model, ResNet50V2 \cite{DBLP:journals/corr/HeZR016}, and take
 the feature maps of the model at different levels to use as the features for 
 a linear classifier, which we train on our human protein data. We freeze the weights
-of the pretrained model and train only the added layers at the end.
+of the pre-trained model and train only the added layers at the end.
 \subsection{Data}
-Our data consists of rgb images of human proteins, we process these into 3x224x224 sized
+Our data consists of RGB images of human proteins, we process these into 3x224x224 sized
 arrays as the input to our model. There are a total of 28 different possible classes,
 and each image can belong to multiple classes. We process the labels to be "multi-hot":
 a vector of length $n$ where $n$ is the number of classes, where it is a 1 at position $i$ if 
@@ -114,7 +114,7 @@ it belongs to the $i^{th}$ class and 0 otherwise.
 \subsection{Model}
 
 The input of our model consists of 224x224x3 sized arrays, they first go through a batch normalization layer\cite{ioffe2015batch}. This helps
-us normalize the input to the pretrained model on our specific dataset, allowing us 
+us normalize the input to the pre-trained model on our specific dataset, allowing us 
 to feed the raw data in without much preprocessing.
 
 The ResNet50V2 model is conveniently structured as distinct residual blocks.
@@ -128,17 +128,17 @@ We then flatten the feature maps using global average pooling\cite{Lin2013Networ
 fully connected dense layer for prediction. 
 
 The dataset we are tackling is a multi label classification problem, therefore use sigmoid activation
-in the prediction layer as each image can belong in multiple classes. We  use binary crossentropy as the loss function. 
+in the prediction layer as each image can belong in multiple classes. We  use binary cross entropy as the loss function. 
 \begin{equation}
     L(Y, \hat{Y}) = \sum_i^n y_i\log{(\hat{y}_i)}
 \end{equation}
 Where $Y$ is the "multi hot" representation of our label, $y_i$
 is the value at each $i^{th}$ position in the label.  We assume that for every value in the output vector $\hat{y_i}$ is the probability
-that an image is in class $i$, where each $\hat{y}_i$ is indenpendent of other class probabilities because 
+that an image is in class $i$, where each $\hat{y}_i$ is independent of other class probabilities because 
 each $x$ can belong to multiple classes at the same time. 
 
 \subsection{Training}
-To train the each model we used the ADAM optimization algorithm\cite{kingma2014adam} with minibatches of size 32.
+To train the each model we used the ADAM optimization algorithm\cite{kingma2014adam} with mini-batches of size 32.
 The parameters we used for ADAM were: $\eta = 10^{-3}$, $\beta_1 = 0.9$, $beta_2=0.999$, these
 are the default values in Keras' implementation of ADAM.
 We were able to run 10 epochs of training on each model given our computing resources. 
@@ -160,7 +160,7 @@ Comparing the results of the models, we found the pre-trained model with the ear
      \hline
 \end{tabular}
 
-{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pretrained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
+{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pre-trained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
 
 \label{table:1}
 \end{table}
