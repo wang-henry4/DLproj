@@ -135,9 +135,9 @@ The parameters we used for ADAM were: $\eta = 10^{-3}$, $\beta_1 = 0.9$, $beta_2
 are the default values in Keras' implementation of ADAM.
 We were able to run 10 epochs of training on each model given our computing resources. 
 \section{Results}
-Comparing the results of the models, we found the pre-trained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on the basic features of images, such as lines and shapes. Since the images of protein are composed of similar shapes and simple colors, the earlier layer could capture the variance better. 
+Comparing the results of the models, we found the pre-trained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on the basic features of images, such as lines and shapes. Since the images of protein are composed of similar shapes and simple colors, the earlier layer could capture the variance better. Though on the training set, the earliest layers has the lowest accuracy and the third one has the highest, the results on the test dataset prove that the third one might be overfitting. The results on training data set and test data set are in Figure 3 and Table 1.
 
-\subsection{Human Protein Dataset}
+
 \begin{figure}[ht]
     \centering
     \begin{subfigure}[b]{0.8\linewidth}
@@ -147,7 +147,7 @@ Comparing the results of the models, we found the pre-trained model with the ear
     \begin{subfigure}[b]{0.8\linewidth}
       \includegraphics[width=\linewidth]{paper/figures/loss.png}
     \end{subfigure}
-    \caption{Example images from the Human Protein dataset}
+    \caption{Results of models on training data set. Model1 represents the pretrained model with the earliest layer, Model2 with the second earliest layer and so on.}
   \end{figure}
 
 \begin{table}[ht]
@@ -165,12 +165,12 @@ Comparing the results of the models, we found the pre-trained model with the ear
      \hline
 \end{tabular}
 
-{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pre-trained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
+{\raggedright Table 1: Results of models on test set. Model1 represents the pre-trained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
 
 \label{table:1}
 \end{table}
 
-What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and calculated the F1 score on the test data. The data is very unbalanced, with the largest class counting for 42\% of the training data and getting an F1 score of 0.680 on the test data. So we choose the weighted F1 score and that of the best model is 0.32. We noticed that judging on F1 score, our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
+What is more, we predict the classes based on the threshold that the probabilities of chosen classes have to be larger than twice the probabilities of unchosen classes and calculated the F1 score on the test data. The data is very unbalanced, with the largest class counting for 42\% of the training data and getting an F1 score of 0.680 on the test data. So we choose the weighted F1 score and that of the best model is 0.321 (the F1 scores of others are in Table 1). We noticed that judging on F1 score, our model performance is not good compared to that of the HPA Cell Atlas team's study. It is possibly caused by the unbalance in data and the limited number of trained epochs.
 
 Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
 
