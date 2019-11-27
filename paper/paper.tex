@@ -11,32 +11,25 @@
 \maketitle
 
 \section{General Information}
-This project is focusing on building a transfer learning model on biological fluorescence microscope captured images. We plan to test the performance between different layers in a pretrained model and address how could an optimize for this specific type of image be compared with learning regular images. 
+This project is focusing on building a transfer learning model on biological fluorescence microscope captured images. We plan to test the performance between different layers in a pre-trained model and address how could an optimize for this specific type of image be compared with learning regular images. 
 
 \section{Abstract}
 Transfer learning is a popular method for tackling machine learning problems with image classification, 
-pretrained models alows people to leverage it's generalization capabilities without needing large compute 
-resources. In this project, we focused on models to classify images of mixed patterns of proteins,
-taken with a microscope. To achieve this goal, we utilized transfer learning 
-and demonstrated the hypothesis that earlier layers in a convolutional network captures simple features,
-while later layers captures more complex features. Due to the differences between the training set
-of the pretrained model and our dataset, we show that ealier layers in a pretrained convolutional network
-gives better results in our classification task. Our best model realized a 94\% accuracy on 
-the test dataset with limited computational sources, thus provided a feasible way for people with 
-no powerful machines.
+pre-trained models allow people to leverage it's generalization capabilities without needing large compute resources. In this project, we focused on models to classify images of mixed patterns of proteins,
+taken with a microscope. To achieve this goal, we utilized transfer learning and demonstrated the hypothesis that earlier layers in a convolutional network capture simple features,
+while later layers capture more complex features. Due to the differences between the training set
+of the pre-trained model and our dataset, we show that earlier layers in a pre-trained convolutional network
+give better results in our classification task. Our best model realized a 94\% accuracy on the test dataset with limited computational sources, thus provided a feasible way for people with no powerful machines.
 
 \section{Introduction}
-There are now many neural network methods and architectures designed for 
-image classification that perform exceptionaly well. These models were trained
-on millions of images, with powerful GPU acceleration. However in many cases where an individual or group needs a model for an image classification task, these pretrained models do cannot be applied directly. In this case, the usual solution is to use transfer learning. Using the pretrained model as a feature extractor, we pass our task specific data into a pretrained model and then train a linear classifier using the extracted features of our images.
+There are now many neural network methods and architectures designed for image classification that performs exceptionally well. These models were trained
+on millions of images, with powerful GPU acceleration. However, in many cases where an individual or group needs a model for an image classification task, these pre-trained models cannot be applied directly. In this case, the usual solution is to use transfer learning. Using the pre-trained model as a feature extractor, we pass our task-specific data into a pre-trained model and then train a linear classifier using the extracted features of our images.
 \\
 \\
-These pretrained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
-collection of images of real world objects such as animals, like dogs and cats, and other objects like cars.
+These pre-trained models are usually trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset is a large
+collection of images of real-world objects such as animals, like dogs and cats, and other objects like cars.
 Thus we would expect these models to be good at extracting features from images that are similar to ImageNet,
-aka realworld, everyday objects. If we want to apply these models to images that are very different from 
-the ImageNet dataset, such as the Human Protein dataset, we would expect the model to 
-not be able to extract very good features.
+aka real-world, everyday objects. If we want to apply these models to images that are very different from the ImageNet dataset, such as the Human Protein dataset, we would expect the model to not be able to extract very good features.
 
 \subsection{Human Protein Dataset}
 \begin{figure}[ht]
@@ -71,7 +64,7 @@ not be able to extract very good features.
 
 Researches in the biology field have been made a lot easier by data analysis nowadays. Training machines for tedious work is saving experts a lot of time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong\cite{subcellular}. 
 \\\\
-Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address similar problems, people have tried adaptive k-NN classifiers\cite{knn}, support vector machines\cite{svm}, and decision trees\cite{dtree}. Though it was a breakthrough, the results they are getting is not so good compared to machine learning methods in recent years. A study conducted by the HPA Cell Atlas team\cite{nature}, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with the F1 score equal to 0.72 but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplements.
+Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address similar problems, people have tried adaptive k-NN classifiers\cite{knn}, support vector machines\cite{svm}, and decision trees\cite{dtree}. Though it was a breakthrough, the results they are getting are not so good compared to machine learning methods in recent years. A study conducted by the HPA Cell Atlas team\cite{nature}, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with the F1 score equal to 0.72 but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplements.
 \\\\
 Though the HPA Cell Atlas team used the transfer-learning approach as well, their input involved the results of training 60,000 players and millions of images which is time-consuming and not applicable for small intuitions. So we proposed a project to classify proteins with pre-trained models.
 
@@ -84,59 +77,50 @@ Though the HPA Cell Atlas team used the transfer-learning approach as well, thei
 \end{figure}
 
 It has been shown that in a deep convolutional neural network trained for image classification, the models
-can be used on other image datasets to extract useful feature maps for machine learning purposes. The learned 
-feature maps of the pretrained network start very simple, looking for edges and corners, and become increasingly
-complex as the layers get deeper.\cite{10.1007/978-3-319-10590-1_53} These learned feature maps are general enough to be applied to unseen data from 
-from other image datasets\cite{NIPS2014_5347}.
+can be used on other image datasets to extract useful feature maps for machine learning purposes. The learned feature maps of the pre-trained network start very simple, looking for edges and corners, and become increasingly
+complex as the layers get deeper.\cite{10.1007/978-3-319-10590-1_53} These learned feature maps are general enough to be applied to unseen data from other image datasets\cite{NIPS2014_5347}.
 \\\\
-The most common and powerful pretrained models used for images are all trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset
+The most common and powerful pre-trained models used for images are all trained on the ImageNet dataset\cite{imagenet_cvpr09}. This dataset
 is an incredibly diverse set of images containing a thousand different classes of everyday objects. For most machine learning
-applications relating to image processing, this dataset works very well as a base dataset for pretrained networks as it can 
-be interpreted as a superset of the images that an application would see in the real world. However, this is not true for all
-applications, specifically those which deal with images that are very different from what we see in our everyday lives, for Example
+applications relating to image processing, this dataset works very well as a base dataset for pre-trained networks as it can be interpreted as a superset of the images that an application would see in the real world. However, this is not true for all
+applications, specifically those which deal with images that are very different from what we see in our everyday lives, for example,
 images of microscopic objects.
 \\\\
-The Human Protein Dataset is an example of such a dataset. They do not have much of the complex features that any real world image would have, and are mostly made up of 
-lines, and circles and corners. Therefore we predict that early layers from a pretrained model will
+The Human Protein Dataset is an example of such a dataset. They do not have much of the complex features that any real-world image would have, and are mostly made up of lines, and circles and corners. Therefore we predict that early layers from a pre-trained model will
 provide good features for classification for this dataset, while later layers will perform comparatively worse, 
-due to the fact that the more complex patterns that the later layers are looking for do not exist in this 
-dataset. 
+due to the fact that the more complex patterns that the later layers are looking for do not exist in this dataset. 
 \\\\
-In this paper we test this hypothesis by using a pretrained model as a feature extractor, we choose multiple different
-hidden layers to from this model, and train a classifier on each different layer. We find that the best performing classifier
+In this paper we test this hypothesis by using a pre-trained model as a feature extractor, we choose multiple different
+hidden layers to from this model and train a classifier on each different layer. We find that the best performing classifier
 for the Human Protein dataset is the one with the earliest layer hidden layer as its feature extractor.
 
 \section{Method}
-We are seaking to test the feature extraction power of pretrained networks on 
-a dataset that is very different from the one which it is trained on. We take 
-a pretrained, state-of-the-art image classification model, ResNet50V2 \cite{DBLP:journals/corr/HeZR016}, and take
+We are seeking to test the feature extraction power of pre-trained networks on a dataset that is very different from the one which it is trained on. We take 
+a pre-trained, state-of-the-art image classification model, ResNet50V2 \cite{DBLP:journals/corr/HeZR016}, and take
 the feature maps of the model at different levels to use as the features for 
 a linear classifier, which we train on our human protein data. We freeze the weights
-of the pretrained model and train only the added layers at the end.
+of the pre-trained model and train only the added layers at the end.
 \subsection{Data}
 Our data consists of rgb images of human proteins, we process these into 3x224x224 sized
 arrays as the input to our model. There are a total of 28 different possible classes,
 and each image can belong to multiple classes. We process the labels to be "multi-hot":
-a vector of length $n$ where $n$ is the number of classes, where it is a 1 at position $i$ if 
-it belongs to the $i^{th}$ class and 0 otherwise.
+a vector of length $n$ where $n$ is the number of classes, where it is a 1 at position $i$ if it belongs to the $i^{th}$ class and 0 otherwise.
 \subsection{Model}
 
 The input of our model consists of 224x224x3 sized arrays, they first go through a batch normalization layer\cite{ioffe2015batch}. This helps
-us normalize the input to the pretrained model on our specific dataset, allowing us 
-to feed the raw data in without much preprocessing.
+us normalize the input to the pre-trained model on our specific dataset, allowing us 
+to feed the raw data in without much pre-processing.
 
 The ResNet50V2 model is conveniently structured as distinct residual blocks.
-For our experiments we picked the outputs of 4 different residual blocks, evenly spaced between each other, in the model
-as our final feature map. The output of the chosen hidden layers is a large amount of 
-feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
-layer due to the amount of feature maps ResNet50V2 outputs and thus the amount of parameters that would need. We chose to reduce the number of 
-feature maps from the output by first passing it through a 1x1 convolution layer\cite{szegedy2014going} with 
-relu activation. This allows us to reduce the number of final feature maps in a efficient way, significantly reducing the number of parameters and training time. 
+For our experiments, we picked the outputs of 4 different residual blocks, evenly spaced between each other, in the model
+as our final feature map. The output of the chosen hidden layers is a large number of feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
+layer due to the number of feature maps ResNet50V2 outputs and thus the number of parameters that would need. We chose to reduce the number of feature maps from the output by first passing it through a 1x1 convolution layer\cite{szegedy2014going} with 
+relu activation. This allows us to reduce the number of final feature maps in an efficient way, significantly reducing the number of parameters and training time. 
 We then flatten the feature maps using global average pooling\cite{Lin2013NetworkIN}, and then connect to a 
 fully connected dense layer for prediction. 
 
-The dataset we are tackling is a multi label classification problem, therefore use sigmoid activation
-in the prediction layer as each image can belong in multiple classes. We  use binary crossentropy as the loss function. 
+The dataset we are tackling is a multi-label classification problem, therefore use sigmoid activation
+in the prediction layer as each image can belong in multiple classes. We use binary cross-entropy as the loss function. 
 \begin{equation}
     L(Y, \hat{Y}) = \sum_i^n y_i\log{(\hat{y}_i)}
 \end{equation}
@@ -153,6 +137,19 @@ We were able to run 10 epochs of training on each model given our computing reso
 \section{Results}
 Comparing the results of the models, we found the pre-trained model with the earliest hidden layer performed the best, with the accuracy rate on the test dataset equal to 0.946. This is consistent with our guess as the earlier layer focuses on the basic features of images, such as lines and shapes. Since the images of protein are composed of similar shapes and simple colors, the earlier layer could capture the variance better. 
 
+\subsection{Human Protein Dataset}
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.8\linewidth}
+      \includegraphics[width=\linewidth]{paper/figures/accuray.png}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{0.8\linewidth}
+      \includegraphics[width=\linewidth]{paper/figures/loss.png}
+    \end{subfigure}
+    \caption{Example images from the Human Protein dataset}
+  \end{figure}
+
 \begin{table}[ht]
 \centering
 
@@ -168,7 +165,7 @@ Comparing the results of the models, we found the pre-trained model with the ear
      \hline
 \end{tabular}
 
-{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pretrained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
+{\raggedright Table 1: Results of models on test set. Above is the result of models, where Model1 represents the pre-trained model with the earliest layer, Model2 with the second earliest layer and so on. \par}
 
 \label{table:1}
 \end{table}
@@ -178,17 +175,17 @@ What is more, we predict the classes based on the threshold that the probabiliti
 Considering we are able to finish training this model on 26455 images in 4 hours, this result is pretty applicable in practice.
 
 \section{Discuss}
-This paper presents a complementary implementation of image identification deep learning model based on the pre-trained open-sourced residual network ResNet. We built four different models by modified a different layer blocks from the ResNet for each of the model. The precision and recall of four different models are close but the first model has the best result on both parts(Accuracy: 0.946 over 0.935 average; Recall 0.299 over 0.336 average). This result reveals that the earlier hidden layers could capture the variance better than the later hidden layers. This output consist with our expectation as the earlier layers focuses on basic features of images. We believe the importance of the entry layers, since some of the protein localization patterns from the images are very small and easily to be overlooked. Another challenge is that the images of protein are captured by automated fluorescence microscopy system and composed of shapes and colors with minor differences. We believe that feature of the source images determined that the earlier layers and learning process may do a more significant impact on the result compared with the later hidden layers.
+This paper presents a complementary implementation of image identification deep learning model based on the pre-trained and open-sourced residual network ResNet. We built four different models by modified different layer blocks from the ResNet for each of the models. The precision and recall of four different models are close but the first model has the best result on both parts(Accuracy: 0.946 over 0.935 average; Recall 0.299 over 0.336 average). This result reveals that the earlier hidden layers could capture the variance better than the later hidden layers. This output consists of our expectation as the earlier layers focus on the basic features of images. We believe the importance of the entry layers since some of the protein localization patterns from the images are very small and easy to be overlooked. Another challenge is that the images of protein are captured by an automated fluorescence microscopy system and composed of shapes and colors with minor differences. We believe that the feature of source images determined that the earlier layers and learning process may do a more significant impact on the result compared with the later hidden layers.
 \\
 \\
-Even the general output results of the four models are very similar, we still believe that they are enough to support our conjecture. The main reason for this is the whole learning process are all based on ResNet which is a well developed and mature pre-trained model. It won the champion of ILSVRC in 2015, and we believe the performance of ResNet provides a nice basement of high accuracy and low loss output. Another possible reason we do not have enough comparing test cases.
-Due to the high requirement of both CPU and GPU performance of this project, we could only test the model based on our local hardware instead of cloud machine. The whole test of the current 4 distinct models would take 8 up to over 20 hours to complete. The time and hardware limit the number of tests we could made for this project. We believe when more models' performance could be tested, the performance trend of layers from front to end would be more observable.
+Even the general output results of the four models are very similar, we still believe that they are enough to support our conjecture. The main reason for this is the whole learning process is all based on ResNet which is a well developed and mature pre-trained model. It won the champion of ILSVRC in 2015, and we believe the performance of ResNet provides a nice basement of high accuracy and low loss output.\cite{winner} Another possible reason we do not have enough comparing test cases.
+Due to the high requirement of both CPU and GPU performance of this project, we could only test the model based on our local hardware instead of a cloud machine. The whole test of the current 4 distinct models would take 8 up to over 20 hours to complete. The time and hardware limit the number of tests we could make for this project. We believe when more models could be tested, the performance trend of different layers from front to end would be more observable.
 \\
 \\
-The hardware problem restricts the final F1 score as well. Our current data has a F1 score varies rapidly from 0.32 to 0.68 when the ideal score should be stabled above 0.70. We compared our code with a published note and we believe the most possible reason is we epoch each model test too little. To make the test possible to complete locally, we have 10 epoch with a batch size of 32. An ideal epoch number for a project like this should be around 100. Since we only have a 10\% epoch size, and based on former tests and researches, an unbalanced F1 would possibly happened.
+The hardware problem restricts the final F1 score as well. Our current data has an F1 score that varies rapidly from 0.32 to 0.68 when the ideal score should be stabled above 0.70. We compared our code with a published note\cite{note} and we believe the most possible reason is we epoch each model tests too little. To make the test possible to complete locally, we have 10 epoch with a batch size of 32. An ideal epoch number for a project like this should be around 100. Since we only have a 10\% epoch size and based on former tests and researches\cite{100epo}, an unbalanced F1 would possibly happen.
 \\
 \\
-This project is a short one on purpose to achieve a real deep learning system. This project is focusing on building a transfer learning model on biological fluorescence microscope captured images. We tested the performance between four different layers in a pretrained model ResNet50V2 and find that the earlier layer performs better than latter layers this specific type of image. To refine this project, more tests based on different layer classifiers should be implemented, and tests with more epoch should be considered. These works are valuable since they could highly robust the conclusion of this paper and verify how similar DNNs should be designed and focused especially those for biological researches. To achieve this, a reliable testing cloud machine should be very useful. Other techniques like clusters and codebooks are also possible options to lower down the source complexity for local tests. This paper provides a possible strategy and idea to solve image recognition problems of high similarity with easy-overlooked critical features.
+This project is focusing on building a transfer learning model on biological fluorescence microscope captured images. We tested the performance between four different layers in a pre-trained model ResNet50V2 and find that the earlier layer performs better than the latter layers of this specific type of image. To refine this project, more tests based on different layer classifiers should be implemented, and tests with more epoch should be considered. These works are valuable since they could highly robust the conclusion of this paper and verify how similar DNNs should be designed and focused especially those for biological researches. To achieve this, a reliable testing cloud machine should be very useful. Other techniques like clusters and codebooks are also possible options to lower down the source complexity for local tests. This paper provides a possible strategy and idea to solve image recognition problems of high similarity with easy-overlooked critical features.
 
 \section{Author Contributions}
 Wang, Feng, and Zhao conceived the project and designed the methodology of the project. Wang build the learning machine. Feng analysed the output and created the figures. Wang, Feng, and Zhao refined the learning machine. 
