@@ -3,7 +3,18 @@
 \usepackage{subcaption}
 \graphicspath{ {figures/} }
 \begin{document}
- 
+
+\section*{Abstract}
+Transfer learning is a popular method for tackling machine learning problems with image classification, 
+pretrained models alows people to leverage it's generalization capabilities without needing large compute 
+resources. In this project, we focused on models to classify images of mixed patterns of proteins,
+taken with a microscope. To achieve this goal, we utilized transfer learning 
+and demonstrated the hypothesis that earlier layers in a convolutional network captures simple features,
+while later layers captures more complex features. Due to the differences between the training set
+of the pretrained model and our dataset, we show that ealier layers in a pretrained convolutional network
+gives better results in our classification task. Our best model realized a 94\% accuracy on 
+the test dataset with limited computational sources, thus provided a feasible way for people with 
+no powerful machines.
 \section{Introduction}
 There are now many neural network methods and architectures designed for 
 image classification that perform exceptionaly well. These models were trained
