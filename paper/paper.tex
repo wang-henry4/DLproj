@@ -62,7 +62,7 @@ not be able to extract very good features.
     \caption{Example images from the Human Protein dataset}
   \end{figure}
   
-Researches in the biology field have been made a lot easier by data analysis nowadays. Training machines for tedious work is saving experts a lot of time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong\cite{subcellular}. 
+Researches in the biology field have been made a lot easier by applying data analysis nowadays. Training machines for tedious work is saving experts a lot of time and also makes it possible to learn a mass of variations thoroughly. Specifically for protein study, an application is classifying well-known proteins, which is essential for learning a novel protein based on the group to which it is predicted to belong\cite{subcellular}. 
 
 Historical efforts have been limited to single patterns in one or a few cell types, but in order to obtain a full understanding of the human cell, models are needed to classify mixed patterns across a range of different human cells. To address similar problems, people have tried adaptive k-NN classifiers\cite{knn}, support vector machines\cite{svm}, and decision trees\cite{dtree}. Though it was a breakthrough, the results they are getting is not so good compared to machine learning methods in recent years. A study conducted by the HPA Cell Atlas team\cite{nature}, with Devin Sullivan and Casper Winsnes as lead authors combined citizen science task and deep learning. The contribution of this study is huge. It not only achieved a good classification with the F1 score equal to 0.72 but also supplemented HPA Cell data with the result of gamers’ annotations. The data we are using is based on their supplements.
 
@@ -123,8 +123,7 @@ as our final feature map. The output of the chosen hidden layers is a large amou
 feature maps. Due to limitations of our compute resources, we chose not to directly flatten the feature maps and connect it to a dense prediction
 layer due to the amount of feature maps ResNet50V2 outputs and thus the amount of parameters that would need. We chose to reduce the number of 
 feature maps from the output by first passing it through a 1x1 convolution layer\cite{szegedy2014going} with 
-relu activation. This allows us to reduce the number of final feature maps in a efficient way, significantly reducing the number of parameters and training time. 
-We then flatten the feature maps using global average pooling\cite{Lin2013NetworkIN}, and then connect to a 
+Relu activation. This allows us to reduce the number of final feature maps in an efficient way, significantly reducing the number of parameters and training time. We then flatten the feature maps using global average pooling\cite{Lin2013NetworkIN}, and then connect to a 
 fully connected dense layer for prediction. 
 
 The dataset we are tackling is a multi label classification problem, therefore use sigmoid activation
